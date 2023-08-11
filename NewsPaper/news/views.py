@@ -1,6 +1,8 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from .filters import PostFilter
+from .forms import PostForm
+from django.urls import reverse_lazy
 
 
 class PostList(ListView):
@@ -11,11 +13,11 @@ class PostList(ListView):
     paginate_by = 10
 
 
-
 class PostDetail(DetailView):
     model = Post
     template_name = 'post_detail.html'
     context_object_name = 'post_detail'
+
 
 class PostSearch(ListView):
     model = Post
@@ -26,5 +28,25 @@ class PostSearch(ListView):
     def get_context_data(self,
                          **kwargs):  # забираем отфильтрованные объекты переопределяя метод get_context_data у наследуемого класса (привет, полиморфизм, мы скучали!!!)
         context = super().get_context_data(**kwargs)
-        context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())  # вписываем наш фильтр в контекст
+        context['filter'] = PostFilter(self.request.GET,
+                                       queryset=self.get_queryset())  # вписываем наш фильтр в контекст
+
         return context
+
+
+class PostCreate(CreateView):
+    template_name = 'post_create.html'
+    form_class = PostForm
+    model = Post
+
+
+class PostUpdate(UpdateView):
+    template_name = 'post_create.html'
+    form_class = PostForm
+    success_url = reverse_lazy('post-list')
+
+
+class PostDelete(DeleteView):
+    template_name = 'post_delete.html'
+    model = Post
+    success_url = reverse_lazy('post-list')

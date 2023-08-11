@@ -29,6 +29,7 @@
                 <td>{{posts.title|truncatewords:5|censor}}</td>
                 <td>{{posts.time_create|date:'d M Y'}}</td>
                 <td>{{posts.text|truncatewords:20|censor}}</td>
+                 <td><button><a href="http://127.0.0.1:8000/post/{{ post.pk }}/delete" class="button">Удалить</a></button></td>
             </tr>
             {% endfor %}
         </table>

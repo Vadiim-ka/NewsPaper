@@ -1,4 +1,6 @@
-{% extends 'template/default.html' %}
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
 
 {% block title %} Поиск  {% endblock title %}
 
@@ -25,17 +27,15 @@
     </thead>
     {% for posts in filter.qs %} <!-- поменяем products на filter.qs, т. к. теперь мы забираем уже отобранную по каким-то параметрам информацию -->
     <tr>
+
         <td>
-            {{ posts.|truncatewords:5|censor }}
+            {{ posts|truncatewords:5|censor }}
         </td>
         <td>
-            {{ product.time_create|date:'d M Y' }}
+            {{ posts.time_create|date:'d M Y' }}
         </td>
         <td>
-            {{ product.|truncatewords:20|censor }}
-        </td>
-        <td>
-            {{ product.quantity }}
+            {{ posts|truncatewords:20|censor }}
         </td>
     </tr>
     {% endfor %}
@@ -51,7 +51,9 @@
     {% for num in page_obj.paginator.page_range %}
         {% if page_obj.number == num %}
             <a>{{ num }}</a>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}            <a href="?page={{ num }}">{{ num }}</a>        {% endif %}
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
     {% endfor %}
 
     {% if page_obj.has_next %}
