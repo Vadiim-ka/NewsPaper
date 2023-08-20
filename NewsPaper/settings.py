@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-76!mp3=l(=jauoh4l%9l--8upbi)9^$jq6go5o*@3f6$-tby6d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -40,7 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'fpages',
     'news',
-    'django_filters'
+    'django_filters',
+    'sign',
+    'protect',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 SITE_ID = 1
@@ -128,3 +134,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_EMAIL_REQUIRED = True             #Указывает ,что поле Email является обязательным
+ACCOUNT_UNIQUE_EMAIL = True               # Указывает что поле является уникальным
+ACCOUNT_USERNAME_REQUIRED = False         # Указывает что username является не обязательным
+ACCOUNT_AUTHENTICATION_METHOD = 'email'   # аунтификация будет проходить посредством почты
+ACCOUNT_EMAIL_VERIFICATION = 'none'       # верефикация почты отсутствует
