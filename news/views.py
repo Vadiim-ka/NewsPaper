@@ -4,6 +4,9 @@ from .filters import PostFilter
 from .forms import PostForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
+
 class PostList(ListView):
     model = Post
     ordering = 'title'
@@ -33,13 +36,15 @@ class PostSearch(ListView):
         return context
 
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     template_name = 'post_create.html'
     form_class = PostForm
     model = Post
 
 
-class PostUpdate(LoginRequiredMixin, UpdateView):
+class PostUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     template_name = 'post_update.html'
     form_class = PostForm
 

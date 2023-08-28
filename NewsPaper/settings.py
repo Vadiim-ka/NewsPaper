@@ -143,8 +143,10 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-ACCOUNT_EMAIL_REQUIRED = True             #Указывает ,что поле Email является обязательным
-ACCOUNT_UNIQUE_EMAIL = True               # Указывает что поле является уникальным
-ACCOUNT_USERNAME_REQUIRED = False         # Указывает что username является не обязательным
-ACCOUNT_AUTHENTICATION_METHOD = 'email'   # аунтификация будет проходить посредством почты
-ACCOUNT_EMAIL_VERIFICATION = 'none'       # верефикация почты отсутствует
+ACCOUNT_EMAIL_REQUIRED = True  # Указывает ,что поле Email является обязательным
+ACCOUNT_UNIQUE_EMAIL = True  # Указывает что поле является уникальным
+ACCOUNT_USERNAME_REQUIRED = False  # Указывает что username является не обязательным
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # аунтификация будет проходить посредством почты
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # верефикация почты отсутствует
+
+ACCOUNT_FORMS = {'signup': 'sign.forms.BasicSignupFoRM'}
